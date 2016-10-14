@@ -2,12 +2,13 @@ package com.app.domain;
 
 import com.app.domain.enumerations.Tare;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * Created by prulov on 14.10.2016.
  */
-public class Water extends AbstractDrink {
+public class Water extends AbstractDrink implements Product, Serializable {
 
     public Water() {
     }
