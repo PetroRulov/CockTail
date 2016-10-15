@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CockTail">
+    <output-path>$PROJECT_DIR$/out/artifacts/CockTail</output-path>
+    <root id="archive" name="CockTail.jar" />
+  </artifact>
+</component>

@@ -1,20 +1,24 @@
 package com.app.view;
 
 import java.awt.*;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * Created by prulov on 14.10.2016.
  */
 public class Splash {
 
-    public Splash() throws InterruptedException{
+    public Splash() throws InterruptedException {
 
         int y = 265;
-        final SplashScreen splash = SplashScreen.getSplashScreen();
+
+        SplashScreen splash = SplashScreen.getSplashScreen();
         if (splash == null) {
-            System.out.println("SplashScreen.getSplashScreen() returned null");
+            System.err.println("SplashScreen.getSplashScreen() returned null");
             return;
         }
+
         Thread.sleep(2000);
 
         Graphics2D g = splash.createGraphics();
@@ -31,6 +35,8 @@ public class Splash {
             Thread.sleep(1000);
         }
         splash.close();
+
+
     }
 
 }

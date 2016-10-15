@@ -409,8 +409,6 @@ public class ShopUI {
         getFrame().repaint();
     }
 
-
-
     private void showSaleFromOrderGUI(){
         oTosPUI = new OrderToSalePanelUI(shop, serv);
         getFrame().getContentPane().removeAll();
@@ -419,7 +417,6 @@ public class ShopUI {
         getFrame().pack();
         getFrame().repaint();
     }
-
 
     //util methods for sales history
     private void showAdjustPeriodGUI(){

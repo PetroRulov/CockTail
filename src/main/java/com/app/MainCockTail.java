@@ -12,7 +12,7 @@ public class MainCockTail {
 
     public static void main(String[] args) throws InterruptedException {
 
-        //new Splash();
+        new Splash();
         Shop shop = new Shop();
         shop.setDBManager(new MySQL_DB_Manager());
         new ShopUI(shop);
