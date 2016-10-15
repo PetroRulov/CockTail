@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - cocktail@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+    <schema id="1" name="cocktail">
+      <visible>1</visible>
+    </schema>
+    <schema id="2" name="alcoshop"/>
+    <schema id="3" name="information_schema"/>
+    <schema id="4" name="menagerie"/>
+    <schema id="5" name="mydbtest"/>
+    <schema id="6" name="mysql"/>
+    <schema id="7" name="performance_schema"/>
+    <schema id="8" name="sakila"/>
+    <schema id="9" name="sys"/>
+    <schema id="10" name="world"/>
+    <table id="11" parent="1" name="clients"/>
+    <table id="12" parent="1" name="orders"/>
+    <table id="13" parent="1" name="sales"/>
+    <table id="14" parent="1" name="stock"/>
+    <table id="15" parent="1" name="visitors"/>
+    <column id="16" parent="11" name="id_client">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="17" parent="11" name="surName">
+      <mandatory>1</mandatory>
+      <data-type>varchar(30)|0</data-type>
+    </column>
+    <column id="18" parent="11" name="name">
+      <mandatory>1</mandatory>
+      <data-type>varchar(24)|0</data-type>
+    </column>
+    <column id="19" parent="11" name="dateOfBirth">
+      <mandatory>1</mandatory>
+      <data-type>varchar(10)|0</data-type>
+    </column>
+    <column id="20" parent="11" name="sex">
+      <mandatory>1</mandatory>
+      <data-type>varchar(6)|0</data-type>
+    </column>
+    <column id="21" parent="11" name="eMail">
+      <mandatory>1</mandatory>
+      <data-type>varchar(64)|0</data-type>
+    </column>
+    <key id="22" parent="11" name="PRIMARY">
+      <columns>id_client</columns>
+      <primary>1</primary>
+    </key>
+    <column id="23" parent="12" name="id_order">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="24" parent="12" name="date">
+      <mandatory>1</mandatory>
+      <data-type>varchar(10)|0</data-type>
+    </column>
+    <column id="25" parent="12" name="oSt">
+      <mandatory>1</mandatory>
+      <data-type>enum(&apos;RECIEVED&apos;, &apos;FORMED&apos;, &apos;SHIPPED&apos;, &apos;COMPLETED&apos;)|0</data-type>
+    </column>
+    <column id="26" parent="12" name="payTT">
+      <mandatory>1</mandatory>
+      <data-type>enum(&apos;PREPAID&apos;, &apos;PAID&apos;, &apos;UNPAID&apos;)|0</data-type>
+    </column>
+    <column id="27" parent="12" name="prepayment">
+      <mandatory>1</mandatory>
+      <data-type>decimal(8,2)|0</data-type>
+    </column>
+    <column id="28" parent="12" name="waterID">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="29" parent="12" name="quantity">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="30" parent="12" name="id_visitor">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="31" parent="12" name="income">
+      <mandatory>1</mandatory>
+      <data-type>decimal(8,2)|0</data-type>
+    </column>
+    <key id="32" parent="12" name="PRIMARY">
+      <columns>id_order</columns>
+      <primary>1</primary>
+    </key>
+    <column id="33" parent="13" name="id_sale">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="34" parent="13" name="date">
+      <mandatory>1</mandatory>
+      <data-type>varchar(10)|0</data-type>
+    </column>
+    <column id="35" parent="13" name="id_client">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="36" parent="13" name="id_water">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="37" parent="13" name="quant">
+      <mandatory>1</mandatory>
+      <data-type>int(10)|0</data-type>
+    </column>
+    <column id="38" parent="13" name="income">
+      <mandatory>1</mandatory>
+      <data-type>decimal(8,2)|0</data-type>
+    </column>
+    <column id="39" parent="13" name="wos">
+      <mandatory>1</mandatory>
+      <data-type>enum(&apos;SHOP&apos;, &apos;SITE&apos;)|0</data-type>
+    </column>
+    <column id="40" parent="13" name="orderID">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="41" parent="13" name="PRIMARY">
+      <columns>id_sale</columns>
+      <primary>1</primary>
+    </key>
+    <column id="42" parent="14" name="id_water">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="43" parent="14" name="drink">
+      <mandatory>1</mandatory>
+      <data-type>varchar(30)|0</data-type>
+    </column>
+    <column id="44" parent="14" name="name">
+      <mandatory>1</mandatory>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="45" parent="14" name="tare">
+      <mandatory>1</mandatory>
+      <data-type>enum(&apos;GLASS&apos;, &apos;PAT&apos;, &apos;CLAY&apos;, &apos;TOY&apos;, &apos;TETRAPAC&apos;)|0</data-type>
+    </column>
+    <column id="46" parent="14" name="volume">
+      <mandatory>1</mandatory>
+      <data-type>decimal(6,3)|0</data-type>
+    </column>
+    <column id="47" parent="14" name="quant">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="48" parent="14" name="value">
+      <mandatory>1</mandatory>
+      <data-type>decimal(8,2)|0</data-type>
+    </column>
+    <column id="49" parent="14" name="price">
+      <mandatory>1</mandatory>
+      <data-type>decimal(8,2)|0</data-type>
+    </column>
+    <column id="50" parent="14" name="count">
+      <mandatory>1</mandatory>
+      <data-type>int(10)|0</data-type>
+    </column>
+    <key id="51" parent="14" name="PRIMARY">
+      <columns>id_water</columns>
+      <primary>1</primary>
+    </key>
+    <column id="52" parent="15" name="id_code">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="53" parent="15" name="identify">
+      <mandatory>1</mandatory>
+      <data-type>varchar(10)|0</data-type>
+    </column>
+    <column id="54" parent="15" name="surName">
+      <mandatory>1</mandatory>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="55" parent="15" name="name">
+      <mandatory>1</mandatory>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="56" parent="15" name="telfax">
+      <mandatory>1</mandatory>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="57" parent="15" name="address">
+      <mandatory>1</mandatory>
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="58" parent="15" name="eMail">
+      <mandatory>1</mandatory>
+      <data-type>varchar(64)|0</data-type>
+    </column>
+    <key id="59" parent="15" name="PRIMARY">
+      <columns>id_code</columns>
+      <primary>1</primary>
+    </key>
+  </database-model>
+</dataSource>

@@ -16,7 +16,7 @@ public class Sale implements Serializable {
     private long id_sale;
     private String date = dateFormat(new Date(System.currentTimeMillis()));
     private Client guest;
-    private Water wat;
+    private Product wat;
     private int quant;
     private BigDecimal income;
     private WaysOfSale wos;
@@ -24,7 +24,7 @@ public class Sale implements Serializable {
 
     public Sale(){}
 
-    public Sale(long id_sale, String date, Client guest, Water wat, int quant){
+    public Sale(long id_sale, String date, Client guest, Product wat, int quant){
 
         this.id_sale = id_sale;
         this.date = date;
@@ -80,11 +80,11 @@ public class Sale implements Serializable {
         this.guest = guest;
     }
 
-    public Water getWat() {
+    public Product getWat() {
         return wat;
     }
 
-    public void setWat(Water wat) {
+    public void setWat(Product wat) {
         this.wat = wat;
     }
 

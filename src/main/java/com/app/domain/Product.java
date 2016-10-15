@@ -19,9 +19,7 @@ public interface Product {
     BigDecimal getValue();
     BigDecimal getPrice();
 
-
-
-
+    void setQuant(int quant);
 
     void setCount(int count);
 

@@ -18,6 +18,7 @@ import java.util.List;
 /**
  * Created by prulov on 14.10.2016.
  */
+
 public class MySQL_DB_Manager implements IDBInterface {
 
     private MySQL_DB_Worker mySQLWorker;
@@ -28,60 +29,22 @@ public class MySQL_DB_Manager implements IDBInterface {
     private List<Visitor> visitors;
     private List<Order> orders;
     //stock
-    private List<Water> waters;
     private List<Product> products;
 
     public MySQL_DB_Manager(){
 
         mySQLWorker = new MySQL_DB_Worker();
 
-        this.waters = new ArrayList<Water>();
-        waters = initStock();
         this.products = new ArrayList<>();
         products = fillStock();
-        this.clts = new ArrayList<Client>();
+        this.clts = new ArrayList<>();
         clts = initClientsBase();
         this.visitors = new ArrayList<>();
         visitors = initVisitorsBase();
-        this.sales = new LinkedList<Sale>();
+        this.sales = new LinkedList<>();
         sales = initSalesJournal();
         this.orders = new LinkedList<>();
         orders = initOrdersJournal();
-    }
-
-    @Override
-    public List<Water> initStock() {
-        String watersQuery = "select * from stock";
-        try {
-            Statement statement = mySQLWorker.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(watersQuery);
-            while(resultSet.next()){
-                Water sql = new Water();
-                sql.setId_water(resultSet.getLong("id_water"));
-                sql.setDrink(resultSet.getString("drink"));
-                sql.setName(resultSet.getString("name"));
-                String tare = resultSet.getString("tare");
-                if(tare.equals("GLASS")){
-                    sql.setTare(Tare.GLASS);
-                }else if(tare.equals("PAT")){
-                    sql.setTare(Tare.PAT);
-                }else if(tare.equals("CLAY")){
-                    sql.setTare(Tare.CLAY);
-                }else if(tare.equals("TOY")){
-                    sql.setTare(Tare.TOY);
-                }else{
-                    sql.setTare(Tare.TETRAPAC);
-                }
-                sql.setVolume(resultSet.getDouble("volume"));
-                sql.setQuant(resultSet.getInt("quant"));
-                sql.setValue(resultSet.getBigDecimal("value"));
-                sql.setPrice(resultSet.getBigDecimal("price"));
-                waters.add(sql);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return waters;
     }
 
     @Override
@@ -117,7 +80,7 @@ public class MySQL_DB_Manager implements IDBInterface {
                 sql.setId_sale(resultSet.getLong("id_sale"));
                 sql.setDate(resultSet.getString("date"));
                 sql.setGuest(clts.get((int)resultSet.getLong("id_client")));
-                sql.setWat(waters.get((int)resultSet.getLong("id_water")-1));
+                sql.setWat(products.get((int)resultSet.getLong("id_water")-1));
                 sql.setQuant(resultSet.getInt("quant"));
                 sql.setIncome(resultSet.getBigDecimal("income"));
                 String let = resultSet.getString("wos");
@@ -189,7 +152,7 @@ public class MySQL_DB_Manager implements IDBInterface {
                     sql.setPayTT(PaymentTermsType.PAID);
                 }
                 sql.setPrepayment(resultSet.getBigDecimal("prepayment"));
-                sql.setWater(waters.get((int)resultSet.getLong("waterID")-1));
+                sql.setWater(products.get((int)resultSet.getLong("waterID")-1));
                 sql.setQuantity(resultSet.getInt("quantity"));
                 sql.setClient(visitors.get((int)resultSet.getLong("id_visitor")-1));
                 sql.setIncome(resultSet.getBigDecimal("income"));
@@ -248,11 +211,6 @@ public class MySQL_DB_Manager implements IDBInterface {
     public List<Sale> getSales() { return new LinkedList<Sale>(sales);}
 
     @Override
-    public List<Water> getWaters() {
-        return new ArrayList<Water>(waters);
-    }
-
-    @Override
     public List<Visitor> getVisitors() {
         return new ArrayList<Visitor>(visitors);
     }
@@ -265,27 +223,21 @@ public class MySQL_DB_Manager implements IDBInterface {
     @Override
     public List<Sale> updateSales(Sale sale) {
         sales.add(sale);
-        String update = "INSERT INTO sales(date, id_client, id_water, quant, income, wos, orderID) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?);";
+        String update = "INSERT INTO sales(id_sale, date, id_client, id_water, quant, income, wos, orderID) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
         PreparedStatement preparedStatement = null;
         try{
             preparedStatement = mySQLWorker.getConnection().prepareStatement(update);
-            preparedStatement.setString(1, sale.getDate());
-            preparedStatement.setLong(2, sale.getGuest().getId_client());
-            preparedStatement.setLong(3, sale.getWat().getId_water());
-            preparedStatement.setInt(4, sale.getQuant());
-            preparedStatement.setBigDecimal(5, sale.getIncome());
-            preparedStatement.setString(6, sale.getWos().name());
-            preparedStatement.setLong(7, sale.getOrderID());
+            preparedStatement.setLong(1, sale.getId_sale());
+            preparedStatement.setString(2, sale.getDate());
+            preparedStatement.setLong(3, sale.getGuest().getId_client());
+            preparedStatement.setLong(4, sale.getWat().getId_water());
+            preparedStatement.setInt(5, sale.getQuant());
+            preparedStatement.setBigDecimal(6, sale.getIncome());
+            preparedStatement.setString(7, sale.getWos().name());
+            preparedStatement.setLong(8, sale.getOrderID());
             preparedStatement.execute();
-            //mySQLWorker.getConnection().commit();
-
         } catch (SQLException e) {
-//            try {
-//                mySQLWorker.getConnection().rollback();
-//            } catch (SQLException e1) {
-//                e1.printStackTrace();
-//            }
             e.printStackTrace();
         }
         return sales;
@@ -329,7 +281,7 @@ public class MySQL_DB_Manager implements IDBInterface {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        waters.get((int)wat.getId_water()-1).setQuant(wat.getQuant() - quant);
+        products.get((int)wat.getId_water()-1).setQuant(wat.getQuant() - quant);
     }
 
     @Override
@@ -357,17 +309,18 @@ public class MySQL_DB_Manager implements IDBInterface {
     @Override
     public List<Visitor> updateVisitorsBase(Visitor visitor) {
         visitors.add(visitor);
-        String update = "INSERT INTO visitors(identify, surName, name, telfax, address, email) " +
-                "VALUES(?, ?, ?, ?, ?, ?);";
+        String update = "INSERT INTO visitors(id_code, identify, surName, name, telfax, address, email) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?);";
         PreparedStatement preparedStatement = null;
         try{
             preparedStatement = mySQLWorker.getConnection().prepareStatement(update);
-            preparedStatement.setString(1, visitor.getIdentify());
-            preparedStatement.setString(2, visitor.getSurName());
-            preparedStatement.setString(3, visitor.getName());
-            preparedStatement.setString(4, visitor.getTelfax());
-            preparedStatement.setString(5, visitor.getAddress());
-            preparedStatement.setString(6, visitor.geteMail());
+            preparedStatement.setLong(1, visitor.getId_code());
+            preparedStatement.setString(2, visitor.getIdentify());
+            preparedStatement.setString(3, visitor.getSurName());
+            preparedStatement.setString(4, visitor.getName());
+            preparedStatement.setString(5, visitor.getTelfax());
+            preparedStatement.setString(6, visitor.getAddress());
+            preparedStatement.setString(7, visitor.geteMail());
             preparedStatement.execute();
 
         } catch (SQLException e) {

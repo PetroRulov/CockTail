@@ -10,7 +10,11 @@ public class Splash {
     public Splash() throws InterruptedException{
 
         int y = 265;
-        SplashScreen splash = SplashScreen.getSplashScreen();
+        final SplashScreen splash = SplashScreen.getSplashScreen();
+        if (splash == null) {
+            System.out.println("SplashScreen.getSplashScreen() returned null");
+            return;
+        }
         Thread.sleep(2000);
 
         Graphics2D g = splash.createGraphics();
@@ -27,7 +31,6 @@ public class Splash {
             Thread.sleep(1000);
         }
         splash.close();
-
     }
 
 }

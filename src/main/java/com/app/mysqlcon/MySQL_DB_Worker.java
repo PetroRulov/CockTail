@@ -9,7 +9,7 @@ import java.sql.SQLException;
  */
 public class MySQL_DB_Worker {
 
-    private final String URL = "jdbc:mysql://localhost:3306/cocktail?useSSL=false";
+    private final String URL = "jdbc:mysql://localhost:3306/cocktail?useSSL=false";/*?useSSL=false*/
     private final String USERNAME = "root";
     private final String PASSWORD = "89082d6PRDB";
 

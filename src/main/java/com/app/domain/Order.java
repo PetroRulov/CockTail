@@ -19,7 +19,7 @@ public class Order implements Serializable {
     private OrderStatus oSt;
     private PaymentTermsType payTT;
     private BigDecimal prepayment;
-    private Water water;
+    private Product water;
     private int quantity;
     private Visitor client;
     private BigDecimal income;
@@ -28,7 +28,7 @@ public class Order implements Serializable {
     public Order(){}
 
     public Order(long id_order, String date, OrderStatus oSt, PaymentTermsType payTT, BigDecimal prepayment,
-                 Water water, int quantity, Visitor client){
+                 Product water, int quantity, Visitor client){
         this.id_order = id_order;
         this.date = date;
         this.oSt = oSt;
@@ -101,11 +101,11 @@ public class Order implements Serializable {
         this.prepayment = prepayment.setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 
-    public Water getWater() {
+    public Product getWater() {
         return water;
     }
 
-    public void setWater(Water water) {
+    public void setWater(Product water) {
         this.water = water;
     }
 
