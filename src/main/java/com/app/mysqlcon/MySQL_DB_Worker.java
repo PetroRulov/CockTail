@@ -12,12 +12,12 @@ public class MySQL_DB_Worker {
     private final String URL = "jdbc:mysql://localhost:3306/cocktail?useSSL=false";/*?useSSL=false*/
     private final String USERNAME = "root";
     private final String PASSWORD = "89082d6PRDB";
-
     private Connection connection;
 
-
     public MySQL_DB_Worker(){
+
         try{
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println("DB \"cocktail\" connection is successfully established!");
         }catch(SQLException e){
