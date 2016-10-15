@@ -13,7 +13,7 @@ public class Splash {
 
         int y = 265;
 
-        SplashScreen splash = SplashScreen.getSplashScreen();
+        final SplashScreen splash = SplashScreen.getSplashScreen();
         if (splash == null) {
             System.err.println("SplashScreen.getSplashScreen() returned null");
             return;
