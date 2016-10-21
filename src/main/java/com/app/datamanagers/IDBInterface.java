@@ -10,7 +10,6 @@ import java.util.List;
 public interface IDBInterface {
 
     //shop initiation
-    //List<Water> initStock();
     List<Product> fillStock();
     List<Client> initClientsBase();
     List<Sale> initSalesJournal();
@@ -22,8 +21,6 @@ public interface IDBInterface {
 
     List<Sale> getSales();
 
-    //List<Water> getWaters();
-
     List<Visitor> getVisitors();
 
     List<Order> getOrders();
@@ -32,7 +29,7 @@ public interface IDBInterface {
     // sale transaction
     List<Sale> updateSales(Sale sale);
     List<Order> updateOrders(Order order);
-    void soldWaterMinus(Water wat, int quant);
+    void soldWaterMinus(Product product, int count);
 
     // add new Client
     List<Client> updateClientBase(Client client);

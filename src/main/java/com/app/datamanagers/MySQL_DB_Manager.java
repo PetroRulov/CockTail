@@ -269,19 +269,20 @@ public class MySQL_DB_Manager implements IDBInterface {
     }
 
     @Override
-    public void soldWaterMinus(Water wat, int quant) {
-        String soldWaterminus = "UPDATE `alcoshop`.`stock` SET `quant`=? WHERE `id_water`=?;";
+    public void soldWaterMinus(Product product, int count) {
+        String soldWaterminus = "UPDATE `cocktail`.`stock` SET `quant`=? WHERE `id_water`=?;";
         PreparedStatement preparedStatement = null;
+        System.out.println("product.getQuant() = " + product.getQuant());
+        System.out.println("product.getId_water() = " + product.getId_water());
         try{
             preparedStatement = mySQLWorker.getConnection().prepareStatement(soldWaterminus);
-            preparedStatement.setInt(1, wat.getQuant() - quant);// first(1) parameter where first ? met
-            preparedStatement.setInt(2, (int)wat.getId_water());// second(2) parameter where second ? met
+            preparedStatement.setInt(1, product.getQuant() - count);// first(1) parameter where first ? met
+            preparedStatement.setInt(2, (int)product.getId_water());// second(2) parameter where second ? met
             preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        products.get((int)wat.getId_water()-1).setQuant(wat.getQuant() - quant);
+        products.get((int)product.getId_water() - 1).setQuant(product.getQuant() - count);
     }
 
     @Override

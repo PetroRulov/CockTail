@@ -20,11 +20,9 @@ public class Shop extends Observable {
     private List<Order> orders;
     private List<Visitor> visitors;
     //stock
-    //private List<Water> waters;
     private List<Product> products;
 
     public Shop(){
-        //this.waters = new ArrayList<>();
         this.products = new ArrayList<>();
         this.clts = new ArrayList<>();
         this.sales = new LinkedList<>();
@@ -68,17 +66,6 @@ public class Shop extends Observable {
         setChanged();
         notifyObservers(visitor);
     }
-
-//    public List<Water> getWaters(){
-//        if(waters == null || waters.isEmpty()){
-//            idbI.initStock();
-//        }
-//        return new ArrayList<Water>(waters);
-//    }
-
-//    public void setWaters(List<Water> watersCatalog) {
-//        this.waters = watersCatalog;
-//    }
 
     public List<Product> getProducts(){
         if(products == null || products.isEmpty()){
@@ -134,5 +121,11 @@ public class Shop extends Observable {
         orders = idbI.updateOrders(order);
         setChanged();
         notifyObservers(order);
+    }
+
+    // experimental
+    public void setNewProductsQuantity(Product product, int count){
+        idbI.soldWaterMinus(product, count);
+        products = idbI.updateStock();
     }
 }

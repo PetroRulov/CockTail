@@ -38,6 +38,7 @@ public class SalePanelUI {
     //control fields
     private JTextField tfDate;
 
+    private JTextField tfIDSale;
     private JFormattedTextField tfBID;
     private JFormattedTextField tfQuant;
 
@@ -63,8 +64,6 @@ public class SalePanelUI {
         Border bevel = BorderFactory.createRaisedBevelBorder();
         Border colorBevel = BorderFactory.createBevelBorder(0, Color.ORANGE, Color.YELLOW);
         Border empty = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-        //Border titled = BorderFactory.createTitledBorder(etched, "A Title");
-        //Border titled = BorderFactory.createTitledBorder("A Title");
         Border titled = BorderFactory.createTitledBorder(matte, "SALE TRANSACTION", TitledBorder.CENTER,
                 TitledBorder.CENTER, new Font("Garamond", Font.BOLD, 20), Color.ORANGE);
 
@@ -96,6 +95,20 @@ public class SalePanelUI {
         tfDate.setText(dateFormat(new Date(System.currentTimeMillis())));
         salePanel.add(tfDate, new GridBagConstraints(1, 1, 1, 1, 0, 0, GridBagConstraints.PAGE_START, GridBagConstraints.BOTH, new Insets(10, 0, 10, 10), 0, 0));
 
+        JLabel idSale = new JLabel("Sale's identify #: ");
+        idSale.setFont(new Font("Garamond", Font.ITALIC, 20));
+        idSale.setForeground(Color.ORANGE);
+        salePanel.add(idSale, new GridBagConstraints(4, 1, 1, 1, 0, 0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.BOTH, new Insets(10, 0, 10, 10), 0, 0));
+
+        tfIDSale = new JFormattedTextField(nf);
+        tfIDSale.setFont(new Font("Garamond", Font.ITALIC, 20));
+        tfIDSale.setForeground(Color.BLACK);
+        tfIDSale.setColumns(12);
+        tfIDSale.setHorizontalAlignment(JTextField.RIGHT);
+        tfIDSale.setText(String.valueOf(shop.getIdbI().getSales().size() + 1));
+        tfIDSale.setEditable(false);
+        salePanel.add(tfIDSale, new GridBagConstraints(5, 1, 3, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.BOTH, new Insets(10, 0, 10, 10), 0, 0));
+
         JLabel id = new JLabel("Customer's identify #: ");
         id.setFont(new Font("Garamond", Font.ITALIC, 20));
         id.setForeground(Color.ORANGE);
@@ -113,7 +126,7 @@ public class SalePanelUI {
         area.setEditable(false);
         area.setFont(new Font("Garamond", Font.BOLD, 20));
         area.setForeground(Color.BLACK);
-        salePanel.add(area, new GridBagConstraints(5, 2, 6, 1, 0, 0, GridBagConstraints.PAGE_START, GridBagConstraints.BOTH, new Insets(10, 0, 10, 10), 0, 0));
+        salePanel.add(area, new GridBagConstraints(4, 2, 7, 1, 0, 0, GridBagConstraints.PAGE_START, GridBagConstraints.BOTH, new Insets(10, 0, 10, 10), 0, 0));
 
         JLabel choose = new JLabel("Choose the good: ");
         choose.setFont(new Font("Garamond", Font.BOLD, 20));
@@ -167,7 +180,7 @@ public class SalePanelUI {
         return df.format(d);
     }
 
-    public JTextField getTfDate() {
+    private JTextField getTfDate() {
         return tfDate;
     }
 
@@ -176,7 +189,15 @@ public class SalePanelUI {
         return getTfDate().getText();
     }
 
-    public JFormattedTextField getTfBID() {
+    private JTextField getTfIDSale() {
+        return tfIDSale;
+    }
+
+    public String getIDSale(){
+        return getTfIDSale().getText();
+    }
+
+    private JFormattedTextField getTfBID() {
         return tfBID;
     }
 
@@ -185,16 +206,16 @@ public class SalePanelUI {
         return getTfBID().getText();
     }
 
-    public JFormattedTextField getTfQuant() {
+    private JFormattedTextField getTfQuant() {
         return tfQuant;
     }
 
-    public String getQuantity(){
+    public String getSaleQuantity(){
 
         return getTfQuant().getText();
     }
 
-    public JTextArea getArea() {
+    private JTextArea getArea() {
         return area;
     }
 
@@ -202,7 +223,7 @@ public class SalePanelUI {
         getArea().setText(str);
     }
 
-    public JComboBox getCombo() {
+    private JComboBox getCombo() {
         return combo;
     }
 

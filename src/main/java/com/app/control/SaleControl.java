@@ -1,6 +1,7 @@
 package com.app.control;
 
 import com.app.domain.Client;
+import com.app.domain.Product;
 import com.app.domain.Sale;
 import com.app.domain.Water;
 import com.app.domain.enumerations.WaysOfSale;
@@ -38,8 +39,16 @@ public class SaleControl implements ActionListener, Observer {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(spUI.getSelectedWater()!=null && Integer.parseInt(spUI.getQuantity())>0){
-            long id = shop.getSales().size() + 1;
+        Long id = 0l;
+        if(isLong(spUI.getIDSale())){
+            id = Long.parseLong(spUI.getIDSale());
+        }else{
+            JOptionPane.showConfirmDialog(null, "ERROR: WRONG Sale's identify number!",
+                    "Error message", JOptionPane.PLAIN_MESSAGE);
+            return;
+        }
+
+        if(spUI.getSelectedWater()!=null && Integer.parseInt(spUI.getSaleQuantity())>0){
 
             String date = spUI.getDate();
 
@@ -55,21 +64,21 @@ public class SaleControl implements ActionListener, Observer {
                 return;
             }
 
-            Water wat = spUI.getSelectedWater();
+            Product product = spUI.getSelectedWater();
 
-            int quant = 0;
-            if(isInt(spUI.getQuantity())){
-                quant = Integer.parseInt(spUI.getQuantity());
+            int saleQuantity = 0;
+            if(isInt(spUI.getSaleQuantity())){
+                saleQuantity = Integer.parseInt(spUI.getSaleQuantity());
             }else{
                 JOptionPane.showConfirmDialog(null, "ERROR: Please, input correct Quantity and try again!",
                         "Error message", JOptionPane.PLAIN_MESSAGE);
                 return;
             }
 
-            if(wat.getQuant() >= quant){
-                shop.getIdbI().soldWaterMinus(wat, quant);
+            if(product.getQuant() >= saleQuantity){
+                shop.setNewProductsQuantity(product, saleQuantity);
                 JOptionPane.showConfirmDialog(null, "Transaction is possible!", "Transaction possibility", JOptionPane.PLAIN_MESSAGE);
-                Sale neo = new Sale(id, date, guest, wat, quant);
+                Sale neo = new Sale(id, date, guest, product, saleQuantity);
                 if(clientIsPresent()){
                     BigDecimal fin = neo.getIncome().multiply(new BigDecimal(0.9));
                     neo.setIncome(fin.setScale(2, BigDecimal.ROUND_HALF_UP));
@@ -79,7 +88,6 @@ public class SaleControl implements ActionListener, Observer {
                 long orderID = 0;
                 neo.setOrderID(orderID);
                 shop.addSaleTransaction(neo);
-                shop.getIdbI().updateStock();
             }else{
                 JOptionPane.showConfirmDialog(null, "Transaction is NOT possible! \n Please, try again with new quantity of item",
                         "Transaction possibility", JOptionPane.OK_CANCEL_OPTION);
@@ -87,6 +95,15 @@ public class SaleControl implements ActionListener, Observer {
         }else{
             JOptionPane.showConfirmDialog(null, "Transaction is NOT possible! \n Please, select item and correct quantity",
                     "Transaction possibility", JOptionPane.OK_CANCEL_OPTION);
+        }
+    }
+
+    private boolean isLong(String str){
+        try{
+            Long.parseLong(str);
+            return  true;
+        }catch (NumberFormatException nfe){
+            return false;
         }
     }
 
