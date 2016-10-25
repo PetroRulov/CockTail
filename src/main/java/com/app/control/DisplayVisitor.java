@@ -33,16 +33,16 @@ public class DisplayVisitor implements ActionListener {
 
         int code = 0;
         if(isInt(opUI.getVisitorID())){
-            code = Integer.parseInt(opUI.getVisitorID())-1;
+            code = Integer.parseInt(opUI.getVisitorID());
         }else{
-            JOptionPane.showConfirmDialog(null, "ERROR: Please, input correct Buyer's ID and try again!",
+            JOptionPane.showConfirmDialog(null, "ERROR: Please, input correct Visitor's ID and try again!",
                     "Error message", JOptionPane.PLAIN_MESSAGE);
             return;
         }
-        if(code >=0 && code <= shop.getIdbI().getClts().size() - 1){
+        if(code >=0 && code <= shop.getIdbI().getClts().size()){
             opUI.setVisitortAreaText(shop.getIdbI().getVisitors().get(code).visitorInfoShow());
         }else{
-            JOptionPane.showConfirmDialog(null, "ERROR: Please, input correct Buyer's ID and try again!",
+            JOptionPane.showConfirmDialog(null, "ERROR: Please, input correct Visitor's ID and try again!",
                     "Error message", JOptionPane.PLAIN_MESSAGE);
             return;
         }

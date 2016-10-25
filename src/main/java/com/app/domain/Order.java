@@ -13,8 +13,9 @@ import java.util.Date;
  * Created by prulov on 14.10.2016.
  */
 public class Order implements Serializable {
-
     private long id_order;
+    private long id_number;
+    private int position;
     private String date = dateFormat(new Date(System.currentTimeMillis()));
     private OrderStatus oSt;
     private PaymentTermsType payTT;
@@ -27,9 +28,11 @@ public class Order implements Serializable {
 
     public Order(){}
 
-    public Order(long id_order, String date, OrderStatus oSt, PaymentTermsType payTT, BigDecimal prepayment,
+    public Order(long id_order, long id_number, int position, String date, OrderStatus oSt, PaymentTermsType payTT, BigDecimal prepayment,
                  Product water, int quantity, Visitor client){
+        this.id_number = id_number;
         this.id_order = id_order;
+        this.position = position;
         this.date = date;
         this.oSt = oSt;
         this.payTT = payTT;
@@ -59,6 +62,22 @@ public class Order implements Serializable {
             income = inCome.multiply(new BigDecimal(0.9)) ;
         }
         return income.setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
+    public long getId_number() {
+        return id_number;
+    }
+
+    public void setId_number(long id_number) {
+        this.id_number = id_number;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public long getId_order() {

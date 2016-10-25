@@ -20,7 +20,7 @@ public class TableOfOrders {
 
     public TableOfOrders(Shop shop){
         this.shop = shop;
-        this.columns = 20;
+        this.columns = 21;
         this.table = createOrdersTable();
         table.setFillsViewportHeight(true);
     }
@@ -34,15 +34,15 @@ public class TableOfOrders {
         TableColumn column = null;
         for(int i = 0; i < columns; i++) {
             column = tabOrders.getColumnModel().getColumn(i);
-            if (i == 0 || i == 1 || i == 4 || i == 10) {
+            if (i == 0 || i == 1 || i == 2 || i == 5 || i == 11) {
                 column.setPreferredWidth(27);
-            }else if(i == 6 || i == 11 || i == 13 || i == 14 || i == 15){
+            }else if(i == 7 || i == 12 || i == 14 || i == 15 || i == 16){
                 column.setPreferredWidth(60);
-            }else if(i == 2 || i == 6){
+            }else if(i == 3 || i == 7){
                 column.setPreferredWidth(90);
-            }else if(i == 7 || i == 8 || i == 9 || i == 12) {
+            }else if(i == 8 || i == 9 || i == 10 || i == 13) {
                 column.setPreferredWidth(120);
-            }else if(i == 3){
+            }else if(i == 4){
                 column.setCellRenderer(new DefaultTableCellRenderer() {
                     public JComponent getTableCellRendererComponent(JTable table, Object value,
                                                                     boolean isSelected, boolean hasFocus, int row, int col) {
@@ -66,7 +66,7 @@ public class TableOfOrders {
                         return label;
                     }
                 });
-            }else if(i == 19){
+            }else if(i == 20){
                 column.setPreferredWidth(180);
                 column.setCellRenderer(new DefaultTableCellRenderer() {
                     public JComponent getTableCellRendererComponent(JTable table, Object value,
@@ -103,7 +103,7 @@ public class TableOfOrders {
 
     private Object[] fillColumns() {
         String[] heads = new String[]{
-                "#", "ID", "Date", "Order's status", "Visitor'sID", "Visitor's surname",
+                "#", "Num", "Pos",  "Date", "Order's status", "Visitor'sID", "Visitor's surname",
                 "Visitor's name", "Visitor's tel/fax", "Visitor's address", "Visitor's e-mail",
                 "DrinkID",  "Drink type", "Drink name", "Tare", "Volume, L", "Quantity",
                 "Price, UAH", "Prepayment", "Income, UAH", "Payment terms"};
@@ -121,7 +121,8 @@ public class TableOfOrders {
         for(Order order : shop.getIdbI().getOrders()){
             data[i] = new Object[]{
                     j++,
-                    order.getId_order(),
+                    order.getId_number(),
+                    order.getPosition(),
                     order.getDate(),
                     order.getoSt(),
                     order.getClient().getId_code(),

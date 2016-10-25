@@ -115,7 +115,7 @@ public class OrderPanelUI {
         tfID.setForeground(Color.BLACK);
         tfID.setColumns(12);
         tfID.setHorizontalAlignment(JTextField.RIGHT);
-        tfID.setText(String.valueOf(shop.getIdbI().getOrders().size() + 1));
+        tfID.setText(String.valueOf(shop.getIdbI().getOrders().get(shop.getIdbI().getOrders().size() - 1).getId_number() + 1));
         tfID.setEditable(false);
         orderPanel.add(tfID, new GridBagConstraints(1, 2, 3, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.BOTH, new Insets(10, 0, 10, 10), 0, 0));
 
@@ -171,7 +171,7 @@ public class OrderPanelUI {
         tfVID.setForeground(Color.BLACK);
         tfVID.setColumns(12);
         tfVID.setHorizontalAlignment(JTextField.RIGHT);
-        tfVID.setText(String.valueOf(shop.getIdbI().getVisitors().size()));
+        tfVID.setText(String.valueOf(shop.getIdbI().getVisitors().size() - 1));
         orderPanel.add(tfVID, new GridBagConstraints(4, 3, 1, 1, 0, 0, GridBagConstraints.LINE_START, GridBagConstraints.BOTH, new Insets(10, 0, 10, 10), 0, 0));
 
         visitorArea = new JTextArea(1,1);
@@ -322,7 +322,7 @@ public class OrderPanelUI {
 
     public JTextField getTfQuant(){return tfQuant;}
 
-    public String getQuantity(){
+    public String getOrderCount(){
         return getTfQuant().getText();
     }
 

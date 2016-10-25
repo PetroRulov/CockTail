@@ -123,7 +123,6 @@ public class Shop extends Observable {
         notifyObservers(order);
     }
 
-    // experimental
     public void setNewProductsQuantity(Product product, int count){
         idbI.soldWaterMinus(product, count);
         products = idbI.updateStock();

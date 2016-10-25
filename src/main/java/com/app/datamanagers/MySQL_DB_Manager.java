@@ -130,6 +130,8 @@ public class MySQL_DB_Manager implements IDBInterface {
             while(resultSet.next()){
                 Order sql = new Order();
                 sql.setId_order(resultSet.getLong("id_order"));
+                sql.setId_number(resultSet.getLong("id_number"));
+                sql.setPosition(resultSet.getInt("position"));
                 sql.setDate(resultSet.getString("date"));
 
                 String oSt = resultSet.getString("oSt");
@@ -152,9 +154,9 @@ public class MySQL_DB_Manager implements IDBInterface {
                     sql.setPayTT(PaymentTermsType.PAID);
                 }
                 sql.setPrepayment(resultSet.getBigDecimal("prepayment"));
-                sql.setWater(products.get((int)resultSet.getLong("waterID")-1));
+                sql.setWater(products.get((int)resultSet.getLong("waterID")));
                 sql.setQuantity(resultSet.getInt("quantity"));
-                sql.setClient(visitors.get((int)resultSet.getLong("id_visitor")-1));
+                sql.setClient(visitors.get((int)resultSet.getLong("id_visitor")));
                 sql.setIncome(resultSet.getBigDecimal("income"));
                 orders.add(sql);
             }
@@ -246,20 +248,22 @@ public class MySQL_DB_Manager implements IDBInterface {
     @Override
     public List<Order> updateOrders(Order order) {
         orders.add(order);
-        String update = "INSERT INTO orders(id_order, date, oSt, payTT, prepayment, waterID, quantity, id_visitor, income) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String update = "INSERT INTO orders(id_order, id_number, position, date, oSt, payTT, prepayment, waterID, quantity, id_visitor, income) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         PreparedStatement preparedStatement = null;
         try{
             preparedStatement = mySQLWorker.getConnection().prepareStatement(update);
             preparedStatement.setLong(1, order.getId_order());
-            preparedStatement.setString(2, order.getDate());
-            preparedStatement.setString(3, order.getoSt().name());
-            preparedStatement.setString(4, order.getPayTT().name());
-            preparedStatement.setBigDecimal(5, order.getPrepayment());
-            preparedStatement.setLong(6, order.getWater().getId_water());
-            preparedStatement.setInt(7, order.getQuantity());
-            preparedStatement.setLong(8, order.getClient().getId_code());
-            preparedStatement.setBigDecimal(9, order.getIncome());
+            preparedStatement.setLong(2, order.getId_number());
+            preparedStatement.setInt(3, order.getPosition());
+            preparedStatement.setString(4, order.getDate());
+            preparedStatement.setString(5, order.getoSt().name());
+            preparedStatement.setString(6, order.getPayTT().name());
+            preparedStatement.setBigDecimal(7, order.getPrepayment());
+            preparedStatement.setLong(8, order.getWater().getId_water());
+            preparedStatement.setInt(9, order.getQuantity());
+            preparedStatement.setLong(10, order.getClient().getId_code());
+            preparedStatement.setBigDecimal(11, order.getIncome());
             preparedStatement.execute();
 
         } catch (SQLException e) {
@@ -272,8 +276,6 @@ public class MySQL_DB_Manager implements IDBInterface {
     public void soldWaterMinus(Product product, int count) {
         String soldWaterminus = "UPDATE `cocktail`.`stock` SET `quant`=? WHERE `id_water`=?;";
         PreparedStatement preparedStatement = null;
-        System.out.println("product.getQuant() = " + product.getQuant());
-        System.out.println("product.getId_water() = " + product.getId_water());
         try{
             preparedStatement = mySQLWorker.getConnection().prepareStatement(soldWaterminus);
             preparedStatement.setInt(1, product.getQuant() - count);// first(1) parameter where first ? met

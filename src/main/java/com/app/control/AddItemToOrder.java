@@ -31,22 +31,21 @@ public class AddItemToOrder implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        int quantity = 0;
-        if(isInt(opUI.getQuantity())){
-            quantity = Integer.parseInt(opUI.getQuantity());
+        int count = 0;
+        if(isInt(opUI.getOrderCount())){
+            count = Integer.parseInt(opUI.getOrderCount());
         }else{
             JOptionPane.showConfirmDialog(null, "ERROR: Please, input correct Quantity and try again!",
                     "Error message", JOptionPane.PLAIN_MESSAGE);
             return;
         }
 
-
-        if(opUI.getSelectedWater()!=null && quantity > 0){
+        if(opUI.getSelectedWater()!=null && count > 0){
             Product product = null;
             for (int i = 0; i < list.size(); i++) {
                 if (opUI.getSelectedWater().equals(list.get(i))) {
                     product = list.get(i);
-                    product.setCount(quantity);
+                    product.setCount(count);
 
                 }
             }

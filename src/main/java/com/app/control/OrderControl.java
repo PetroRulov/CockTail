@@ -56,30 +56,31 @@ public class OrderControl implements ActionListener, Observer {
             return;
         }
 
-        long id = Long.parseLong(opUI.getOrderID());
+        long order = shop.getIdbI().getOrders().size();
+        long number = Long.parseLong(opUI.getOrderID());
         String date = opUI.getDate();
         OrderStatus ordSt = opUI.getSelectedOrderStatus();
         PaymentTermsType pTT = opUI.getSelectedPaymentTermType();
 
+        int pos = 0;
         for(Product product : serv.getOrderItems()){
-            Water wat = (Water) product;
+            Product wat = product;
             int count = product.getCount();
-
             if(wat.getQuant() >= count){
+                order++;
+                pos++;
                 shop.getIdbI().soldWaterMinus(wat, count);
                 JOptionPane.showConfirmDialog(null, "Order execution is possible!", "Order's execution possibility", JOptionPane.PLAIN_MESSAGE);
-                Order neo = new Order(id, date, ordSt, pTT, prepmnt, wat, count, guest);
+                Order neo = new Order(order, number, pos, date, ordSt, pTT, prepmnt, wat, count, guest);
                 BigDecimal income = neo.calcIncome(count);
                 neo.setIncome(income);
                 shop.addNewOrderInJournal(neo);
-
-
             }else{
                 JOptionPane.showConfirmDialog(null, "Order execution is NOT possible! \n Please, try again with new quantity of item",
                         "Order's execution possibility", JOptionPane.OK_CANCEL_OPTION);
             }
-            serv.clearOrderItems();
         }
+        serv.clearOrderItems();
     }
 
     private Visitor setTransactionVisitor(){
@@ -111,15 +112,6 @@ public class OrderControl implements ActionListener, Observer {
         }
     }
 
-    /**
-     * This method is called whenever the observed object is changed. An
-     * application calls an <tt>Observable</tt> object's
-     * <code>notifyObservers</code> method to have all the object's
-     * observers notified of the change.
-     *
-     * @param o   the observable object.
-     * @param arg an argument passed to the <code>notifyObservers</code>
-     */
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof Order) {
